@@ -4,7 +4,10 @@ require 'faraday'
 require 'diffbot/api_client/version'
 require 'diffbot/api_client/error'
 require 'diffbot/api_client/faraday'
+require 'diffbot/api_client/generic_api'
 require 'diffbot/api_client/article'
+require 'diffbot/api_client/frontpage'
+require 'diffbot/api_client/custom'
 
 module Diffbot
 
@@ -78,13 +81,13 @@ module Diffbot
     end
 
     # Perform an HTTP GET request
-    def get(path, params = {})
-      request(:get, path, params)
+    def get(path, params = {}, headers = {})
+      request(:get, path, params, headers)
     end
 
     # Perform an HTTP POST request
-    def post(path, data)
-      request(:post, path, data)
+    def post(path, data, headers = {})
+      request(:post, path, data, headers)
     end
 
     # Creates new Article API object
@@ -93,6 +96,23 @@ module Diffbot
     # @return [Diffbot::APIClient::Article]
     def article options = {}
       Diffbot::APIClient::Article.new self, options
+    end
+
+    # Creates new Frontpage API object
+    #
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Frontpage]
+    def frontpage options = {}
+      Diffbot::APIClient::Frontpage.new self, options
+    end
+
+    # Creates new Custom API object
+    #
+    # @param name [String]
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Article]
+    def custom name, options = {}
+      Diffbot::APIClient::Custom.new self, name, options
     end
 
     private
@@ -104,25 +124,15 @@ module Diffbot
       @connection ||= Faraday.new(ENDPOINT, connection_options)
     end
 
-    def request(method, path, data = {})
+    def request(method, path, data = {}, headers = {})
       response = connection.send(method.to_sym, path, data) do |request|
-        request.headers.update(request_headers(method, path, data))
+        request.headers.update(headers)
       end
       response.env
     rescue Faraday::Error::TimeoutError, Timeout::Error => error
       raise(Diffbot::APIClient::Error::RequestTimeout.new(error))
     rescue Faraday::Error::ClientError, JSON::ParserError => error
       fail(Diffbot::APIClient::Error.new(error))
-    end
-
-    def request_headers(method, path, data = {})
-      headers = {}
-
-      if method == :post
-        headers[:content_type]  = 'text/html; charset=UTF-8'
-      end
-
-      headers
     end
   end
 

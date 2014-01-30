@@ -94,6 +94,28 @@ article = client.article.query(
 response = article.execute
 ```
 
+### Frontpage API
+
+Calling Fronpage API is also pretty simple:
+
+```ruby
+response = client.frontpage.get("http://someurl.com/")
+```
+
+By default DML is returned in response. You can change this by adding `:format` to `query`:
+
+```ruby
+response = client.frontpage.query(:format => :json).get("http://someurl.com/")
+```
+
+### Custom API
+
+Similarly, here's how you would call Custom API:
+
+```ruby
+response = client.custom("my-custom-api").get("http://someurl.com/")
+```
+
 ## License
 
 Please see LICENSE for licensing details.

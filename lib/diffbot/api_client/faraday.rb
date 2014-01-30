@@ -15,12 +15,12 @@ module Diffbot
 
         def on_complete(env)
           if respond_to?(:parse)
-            env[:body] = parse(env[:body]) unless unparsable_status_codes.include?(env[:status])
+            env[:body] = parse(env[:body]) if env[:request_headers][:accept] == "application/json" && parsable_status_codes.include?(env[:status])
           end
         end
 
-        def unparsable_status_codes
-          [204, 301, 302, 304]
+        def parsable_status_codes
+          [200]
         end
       end
     end

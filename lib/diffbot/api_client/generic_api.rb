@@ -1,7 +1,7 @@
 module Diffbot
   class APIClient
 
-    # Diffbot Article API class
+    # Diffbot Generic API class
     class GenericAPI
       # API version
       #
@@ -57,6 +57,15 @@ module Diffbot
       # @return [URI::HTTP]
       def url
         @client.endpoint + path
+      end
+
+      # Return full request URL (with params)
+      #
+      # @return [URI::HTTP]
+      def full_url
+        f = url 
+        f = f + "?#{query_params}" if query_params && !query_params.empty?
+        f
       end
 
       # Return serialized request params

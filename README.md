@@ -108,12 +108,63 @@ By default DML is returned in response. You can change this by adding `:format` 
 response = client.frontpage.query(:format => :json).get("http://someurl.com/")
 ```
 
+### Image API
+
+```ruby
+response = client.image.get("http://someurl.com/")
+```
+
+### Product API
+
+```ruby
+response = client.product.get("http://someurl.com/")
+```
+
+### Page Classifier API
+
+Similarly, here's how you would call Page Classifier API:
+
+```ruby
+response = client.page_classifier.query(:mode => "article", :stats => true).get("http://someurl.com/")
+```
+
 ### Custom API
 
-Similarly, here's how you would call Custom API:
+With Custom API you need to supply its name:
 
 ```ruby
 response = client.custom("my-custom-api").get("http://someurl.com/")
+```
+
+### Bulk API
+
+Bulk API allows to submit jobs to Diffbot. Jobs can use different apis to analyse websites. This requires to supply apiUrl which will be used to perform crawling. Ruby client makes possible to avoid using urls here. Instead, it is possible to use Ruby API objects described above:
+
+```ruby
+bulk = client.bulk(
+  :name => "bulk-job",
+  :urls => ["http://someurl.com/", "http://foo.com/"],
+  :api => client.article.query(:fields => [:title, :text]),
+  :options => bulk_arguments_hash
+)
+```
+
+`api` argument here can accept any valid API object with or without extra query parameters.
+
+Once we got bulk object constructed, we can get job details, pause it, resume or delete:
+
+```ruby
+bulk.details
+bulk.pause
+bulk.resume
+bulk.delete
+```
+
+Finally, we can obtain result of bulk job:
+
+```ruby
+bulk.download
+bulk.download(:urls)
 ```
 
 ## License

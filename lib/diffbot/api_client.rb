@@ -7,7 +7,12 @@ require 'diffbot/api_client/faraday'
 require 'diffbot/api_client/generic_api'
 require 'diffbot/api_client/article'
 require 'diffbot/api_client/frontpage'
+require 'diffbot/api_client/image'
+require 'diffbot/api_client/product'
+require 'diffbot/api_client/page_classifier'
 require 'diffbot/api_client/custom'
+require 'diffbot/api_client/bot'
+require 'diffbot/api_client/bulk'
 
 module Diffbot
 
@@ -106,13 +111,46 @@ module Diffbot
       Diffbot::APIClient::Frontpage.new self, options
     end
 
+    # Creates new Image API object
+    #
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Image]
+    def image options = {}
+      Diffbot::APIClient::Image.new self, options
+    end
+
+    # Creates new Product API object
+    #
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Product]
+    def product options = {}
+      Diffbot::APIClient::Product.new self, options
+    end
+
+    # Creates new Page Classifier API object
+    #
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::PageClassifier]
+    def page_classifier options = {}
+      Diffbot::APIClient::PageClassifier.new self, options
+    end
+
     # Creates new Custom API object
     #
     # @param name [String]
     # @param options [Hash]
-    # @return [Diffbot::APIClient::Article]
+    # @return [Diffbot::APIClient::Custom]
     def custom name, options = {}
       Diffbot::APIClient::Custom.new self, name, options
+    end
+
+    # Creates new Bulk API object
+    #
+    # @param args [Hash]
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Bulk]
+    def bulk options = {}
+      Diffbot::APIClient::Bulk.new self, options
     end
 
     private

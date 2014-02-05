@@ -20,8 +20,6 @@ module Diffbot
           :token => @client.token,
           :name => options.delete(:name)
         }
-
-        post(parse_params(options))
       end
 
       # Return request URL
@@ -82,7 +80,7 @@ module Diffbot
             headers[:accept] = "application/json"
           end
 
-          @client.get(job[download_key], {}, headers).body
+          @client.get(job[download_key], {}, headers)
         end
       end
 
@@ -92,7 +90,14 @@ module Diffbot
         headers = {} 
         headers[:accept] = "application/json"
 
-        @client.post(self.url, @params.merge(prms), headers).body
+        @client.post(self.url, @params.merge(prms), headers)
+      end
+
+      def get prms = {}
+        headers = {} 
+        headers[:accept] = "application/json"
+
+        @client.get(self.url, @params.merge(prms), headers)
       end
     end
 

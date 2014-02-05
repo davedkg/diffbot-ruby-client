@@ -24,4 +24,13 @@ describe Diffbot::APIClient do
       client.endpoint.to_s.should eq(Diffbot::APIClient::ENDPOINT)
     end
   end
+
+  describe "generic calls" do
+    it "get" do
+      client = Diffbot::APIClient.new(:token => DEVELOPER_TOKEN)
+      response = client.get "v2/analyze", {:token => client.token, :url => "http://diffbot.com"}
+      response.should be_a(Hash)
+      response[:url].should eq("http://diffbot.com")
+    end
+  end
 end

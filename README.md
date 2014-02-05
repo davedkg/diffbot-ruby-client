@@ -51,6 +51,17 @@ end
 
 ## Usage
 
+### Generic calls
+
+While Ruby client provides support for each Diffbot API through dedicated classes and methods, it is still possible to call API in a generic way. Here's an example how to do that:
+
+```ruby
+client = Diffbot::APIClient.new
+response = client.get("v2/analyze", {:token => DIFFBOT_TOKEN, :url => "http://someurl.com"})
+```
+
+`response` will contain then JSON reply parsed to a Hash. It is possible also to issue POST request the same way (via `post` method).
+
 ### Article API
 
 Assume that we have our `client` configured. In order to use Automatic Article API we need to instantiate Article API instance first:
@@ -120,12 +131,12 @@ response = client.image.get("http://someurl.com/")
 response = client.product.get("http://someurl.com/")
 ```
 
-### Page Classifier API
+### Analyze API
 
-Similarly, here's how you would call Page Classifier API:
+Similarly, here's how you would call Analyze API:
 
 ```ruby
-response = client.page_classifier.query(:mode => "article", :stats => true).get("http://someurl.com/")
+response = client.analyze.query(:mode => "article", :stats => true).get("http://someurl.com/")
 ```
 
 ### Custom API
@@ -165,6 +176,30 @@ Finally, we can obtain result of bulk job:
 ```ruby
 bulk.download
 bulk.download(:urls)
+```
+
+### Crawlbot API
+
+Crawlbot API is pretty similar to Bulk API but instead of `:urls` parameter it requires `:seeds`. Here's the sample call:
+
+```ruby
+crawlbot = client.crawlbot(
+  :name => "test",
+  :seeds => ["http://www.diffbot.com"],
+  :api => client.analyze
+)
+```
+
+Just like Bulk object, Crawlbot supports details, pause, resume and delete operations.
+
+### Batch API
+
+Batch API allows to submit multiple API calls in one single request. Once you've created batch object, you can add api calls using ``<<` method. After that, just call `execute` to submit request:
+
+```ruby
+batch = client.batch
+batch << client.article.query(:fields => [:title, :link, :text], :method => :get, :url => "http://diffbot.com/")
+response = batch.execute
 ```
 
 ## License

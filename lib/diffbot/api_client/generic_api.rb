@@ -68,6 +68,15 @@ module Diffbot
         f
       end
 
+      # Return relative request URL (wihtout hostname, with params)
+      #
+      # @return [URI::HTTP]
+      def relative_full_url
+        f = path 
+        f = "/" + f + "?#{query_params}" if query_params && !query_params.empty?
+        f
+      end
+
       # Return serialized request params
       #
       # @return [String]
@@ -88,7 +97,7 @@ module Diffbot
                              "application/json"
                            end
 
-        @client.get(self.url, @params.merge(:token => @client.token, :url => query_url), headers).body
+        @client.get(self.url, @params.merge(:token => @client.token, :url => query_url), headers)
       end
 
       # Makes POST request with params specified earlier
@@ -105,7 +114,7 @@ module Diffbot
                              "application/json"
                            end
 
-        @client.post(self.url + "?#{Faraday::Utils.build_query(@params.merge(:token => @client.token, :url => query_url))}", data, headers).body
+        @client.post(self.url + "?#{Faraday::Utils.build_query(@params.merge(:token => @client.token, :url => query_url))}", data, headers)
       end
 
       # Executes request (GET or POST) with params specified earlier
@@ -116,9 +125,9 @@ module Diffbot
 
         case @method
         when :get
-          @client.send(@method, self.url, @params.merge(:token => @client.token, :url => @query_url)).body
+          @client.send(@method, self.url, @params.merge(:token => @client.token, :url => @query_url))
         when :post
-          @client.send(@method, self.url + "?#{Faraday::Utils.build_query(@params.merge(:token => @client.token, :url => @query_url))}", @data).body
+          @client.send(@method, self.url + "?#{Faraday::Utils.build_query(@params.merge(:token => @client.token, :url => @query_url))}", @data)
         end
       end
 

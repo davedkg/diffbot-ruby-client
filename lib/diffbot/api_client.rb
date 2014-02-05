@@ -9,10 +9,12 @@ require 'diffbot/api_client/article'
 require 'diffbot/api_client/frontpage'
 require 'diffbot/api_client/image'
 require 'diffbot/api_client/product'
-require 'diffbot/api_client/page_classifier'
+require 'diffbot/api_client/analyze'
 require 'diffbot/api_client/custom'
 require 'diffbot/api_client/bot'
 require 'diffbot/api_client/bulk'
+require 'diffbot/api_client/crawlbot'
+require 'diffbot/api_client/batch'
 
 module Diffbot
 
@@ -87,12 +89,12 @@ module Diffbot
 
     # Perform an HTTP GET request
     def get(path, params = {}, headers = {})
-      request(:get, path, params, headers)
+      request(:get, path, params, headers).body
     end
 
     # Perform an HTTP POST request
     def post(path, data, headers = {})
-      request(:post, path, data, headers)
+      request(:post, path, data, headers).body
     end
 
     # Creates new Article API object
@@ -127,12 +129,12 @@ module Diffbot
       Diffbot::APIClient::Product.new self, options
     end
 
-    # Creates new Page Classifier API object
+    # Creates new Analyze API object
     #
     # @param options [Hash]
-    # @return [Diffbot::APIClient::PageClassifier]
-    def page_classifier options = {}
-      Diffbot::APIClient::PageClassifier.new self, options
+    # @return [Diffbot::APIClient::Analyze]
+    def analyze options = {}
+      Diffbot::APIClient::Analyze.new self, options
     end
 
     # Creates new Custom API object
@@ -151,6 +153,24 @@ module Diffbot
     # @return [Diffbot::APIClient::Bulk]
     def bulk options = {}
       Diffbot::APIClient::Bulk.new self, options
+    end
+
+    # Creates new Crawlbot API object
+    #
+    # @param args [Hash]
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Crawlbot]
+    def crawlbot options = {}
+      Diffbot::APIClient::Crawlbot.new self, options
+    end
+
+    # Creates new Batch API object
+    #
+    # @param args [Hash]
+    # @param options [Hash]
+    # @return [Diffbot::APIClient::Batch]
+    def batch options = {}
+      Diffbot::APIClient::Batch.new self, options
     end
 
     private

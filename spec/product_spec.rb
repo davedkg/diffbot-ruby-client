@@ -10,7 +10,6 @@ describe Diffbot::APIClient::Product do
       response = product.get("http://www.diffbot.com")
       response.should be_a(Hash)
       response[:url].should eq("http://www.diffbot.com")
-      response[:products].should be_an(Array)
     end
   end
 end

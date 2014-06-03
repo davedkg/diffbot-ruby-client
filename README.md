@@ -8,6 +8,12 @@ This is a Ruby client library for [Diffbot][] API.
 
 ## Installation
 
+Install the gem:
+
+```ruby
+gem 'diffbot-ruby-client'
+```
+
 Require diffbot in your app
 
     require "diffbot"

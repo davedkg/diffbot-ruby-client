@@ -69,7 +69,7 @@ module Diffbot
         # Handle error responses
         faraday.response :raise_error
         # Parse JSON response bodies
-        faraday.response :parse_json
+        faraday.response :diffbot_parse_json
         # Set default HTTP adapter
         faraday.adapter :net_http
       end

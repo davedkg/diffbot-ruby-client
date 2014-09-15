@@ -27,4 +27,4 @@ module Diffbot
   end
 end
 
-Faraday::Response.register_middleware :parse_json => Diffbot::APIClient::FaradayMiddleware::ParseJson
+Faraday::Response.register_middleware :diffbot_parse_json => Diffbot::APIClient::FaradayMiddleware::ParseJson

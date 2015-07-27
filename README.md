@@ -11,7 +11,9 @@ This is a Ruby client library for [Diffbot][] API.
 Install the gem:
 
 ```ruby
-gem 'diffbot-ruby-client'
+
+gem 'diffbot-ruby-client', :git => 'git@github.com:diffbot/diffbot-ruby-client.git'
+
 ```
 
 Require diffbot in your app

@@ -18,7 +18,9 @@ gem 'diffbot-ruby-client', :git => 'git@github.com:diffbot/diffbot-ruby-client.g
 
 Require diffbot in your app
 
-    require "diffbot"
+```ruby
+require "diffbot"
+```
 
 ## Configuration
 

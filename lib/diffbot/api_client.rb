@@ -188,7 +188,7 @@ module Diffbot
       end
       response.env
     rescue Faraday::Error::TimeoutError, Timeout::Error => error
-      raise(Diffbot::APIClient::Error::RequestTimeout.new(error))
+      raise(Diffbot::APIClient::RequestTimeout.new(error))
     rescue Faraday::Error::ClientError, JSON::ParserError => error
       fail(Diffbot::APIClient::Error.new(error))
     end

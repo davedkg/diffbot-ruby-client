@@ -25,7 +25,7 @@ module Diffbot
       #
       # @return [String]
       def path
-        "api/#{name}"
+        "v3/#{name}"
       end
 
       # Return request URL

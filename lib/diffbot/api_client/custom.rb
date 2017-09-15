@@ -32,7 +32,7 @@ module Diffbot
       #
       # @return [URI::HTTP]
       def url
-        "http://www.diffbot.com/" + path
+        "http://api.diffbot.com/" + path
       end
 
       private

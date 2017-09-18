@@ -25,14 +25,14 @@ module Diffbot
       #
       # @return [String]
       def path
-        "api/#{name}"
+        "v3/#{name}"
       end
 
       # Return request URL
       #
       # @return [URI::HTTP]
       def url
-        "http://www.diffbot.com/" + path
+        "http://api.diffbot.com/" + path
       end
 
       private

@@ -186,6 +186,10 @@ module Diffbot
       response = connection.send(method.to_sym, path, data) do |request|
         request.headers.update(headers)
       end
+
+      code = response.env[:body][:errorCode]
+      raise(Diffbot::APIClient::Unauthorized.new(code)) if code == 401
+
       response.env
     rescue Faraday::Error::TimeoutError, Timeout::Error => error
       raise(Diffbot::APIClient::RequestTimeout.new(error))

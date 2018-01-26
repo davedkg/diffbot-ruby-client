@@ -9,9 +9,9 @@ module Diffbot
       # @param options [Hash]
       def initialize client, options = {}
         @api = options.delete(:api)
-        raise ArgumentError.new("client should be an instance of Diffbot::APIClient::GenericAPI") unless @api.is_a?(Diffbot::APIClient::GenericAPI)
+        raise ArgumentError.new("client should be an instance of Diffbot::APIClient::GenericAPI") unless @api.nil? || @api.is_a?(Diffbot::APIClient::GenericAPI)
 
-        options[:apiUrl] = @api.full_url
+        options[:apiUrl] = @api.full_url if @api
 
         raise ArgumentError.new("client should be an instance of Diffbot::APIClient") unless client.is_a?(Diffbot::APIClient)
         @client = client
@@ -33,6 +33,7 @@ module Diffbot
       #
       # @return [Hash]
       def details
+        return @details if @details
         post
       end
 

@@ -24,5 +24,8 @@ module Diffbot
     class RequestTimeout < Error
     end
 
+    # Raised when Diffbot returns errorCode 401.
+    class Unauthorized < Error
+    end
   end
 end

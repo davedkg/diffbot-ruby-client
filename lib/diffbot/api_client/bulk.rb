@@ -11,7 +11,7 @@ module Diffbot
       def initialize client, options = {}
         super(client, options)
 
-        post(parse_params(options))
+        @details = post(parse_params(options))
       end
 
       # Return request path

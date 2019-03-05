@@ -27,7 +27,7 @@ module Diffbot
     # @return [String]
     attr_accessor :token
 
-    ENDPOINT = 'http://api.diffbot.com/'
+    ENDPOINT = 'https://api.diffbot.com/'
 
     # Initializes a new Client object
     #

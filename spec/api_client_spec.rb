@@ -38,7 +38,7 @@ describe Diffbot::APIClient do
 
       before(:each) do
         allow(Faraday).to receive(:new).and_return(faraday)
-        allow(faraday).to receive(:get).and_raise(Faraday::Error::TimeoutError)
+        allow(faraday).to receive(:get).and_raise(Faraday::TimeoutError)
       end
 
       it "raises a Diffbot::APIClient::RequestTimeout error" do

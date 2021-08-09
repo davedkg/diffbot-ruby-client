@@ -191,9 +191,9 @@ module Diffbot
       raise(Diffbot::APIClient::Unauthorized.new(code)) if code == 401
 
       response.env
-    rescue Faraday::Error::TimeoutError, Timeout::Error => error
+    rescue Faraday::TimeoutError, Timeout::Error => error
       raise(Diffbot::APIClient::RequestTimeout.new(error))
-    rescue Faraday::Error::ClientError, JSON::ParserError => error
+    rescue Faraday::ClientError, JSON::ParserError => error
       fail(Diffbot::APIClient::Error.new(error))
     end
   end
